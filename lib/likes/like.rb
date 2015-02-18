@@ -4,8 +4,8 @@ module Likes
     # Creates new instance of Like
     #
     # @param [Hash] attributes The attributes to create Like instance with
-    # @option attributes [==] :person The person under the question. Required
-    # @option attributes [==] :item The item person like. Required
+    # @option attributes [Person#==] :person The person under the question. Required
+    # @option attributes [Item#==] :item The item person like. Required
     def initialize(attributes={})
       @person = fetch_required_attribute(attributes, :person)
       @item = fetch_required_attribute(attributes, :item)
@@ -21,6 +21,16 @@ module Likes
       return false unless Like === other
       self.person == other.person &&
         self.item == other.item
+    end
+
+    # @private
+    def add_item_to_map(map)
+      (map[person] ||= []) << item
+    end
+
+    # @private
+    def add_person_to_map(map)
+      (map[item] ||= []) << person
     end
 
     protected

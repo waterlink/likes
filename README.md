@@ -25,6 +25,8 @@ Or install it yourself as:
 *Not implemented yet*
 
 ```ruby
+require "likes"
+
 likeset = Likes::Set.new([
   Likes::Like.new(person: 1, item: 1),
   Likes::Like.new(person: 1, item: 5),

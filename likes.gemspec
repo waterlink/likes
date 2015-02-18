@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Alexey Fedorov"]
   spec.email         = ["waterlink000@gmail.com"]
   spec.summary       = %q{Give it a list of people and their likings and it will tell it what else could these people like.}
-  spec.description   = %q{Made for a greater good.}
+  spec.description   = %q{Give it a list of people and their likings and it will tell it what else could these people like. Made for a greater good.}
   spec.homepage      = "https://github.com/waterlink/likes"
   spec.license       = "MIT"
 

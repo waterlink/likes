@@ -1,6 +1,6 @@
 # Likes
 
-Give it a list of people and their likings and it will tell it what else could these people like.
+Give it a list of people and their likings and it will tell what else could these people like.
 
 This is a ruby gem.
 

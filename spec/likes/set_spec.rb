@@ -1,84 +1,27 @@
 module Likes
   RSpec.describe Set do
-    let(:likeset) {
-      Likes::Set.new([
-        Likes::Like.new(person: 1, item: 1),
-        Likes::Like.new(person: 1, item: 5),
-        Likes::Like.new(person: 1, item: 4),
-        Likes::Like.new(person: 1, item: 7),
+    let(:engine) { class_double(Engines::Protocol) }
+    let(:engine_instance) { instance_double(Engines::Protocol) }
 
-        Likes::Like.new(person: 2, item: 1),
-        Likes::Like.new(person: 2, item: 3),
-        Likes::Like.new(person: 2, item: 5),
-        Likes::Like.new(person: 2, item: 4),
+    let(:raw_likeset) { Fixtures.small_likeset }
+    let(:likeset) { Set.new(raw_likeset, engine) }
 
-        Likes::Like.new(person: 3, item: 3),
-        Likes::Like.new(person: 3, item: 2),
-        Likes::Like.new(person: 3, item: 5),
-        Likes::Like.new(person: 3, item: 4),
-        Likes::Like.new(person: 3, item: 9),
-      ])
-    }
+    let(:proper_likes_of) { Fixtures.small_likeset_likes_of }
+    let(:proper_liked) { Fixtures.small_likeset_liked }
 
     describe "#recommendations_for" do
-      it "returns a list of items" do
-        expect(likeset.recommendations_for(1)).to be_a(Array)
-      end
+      let(:person) { double("Person") }
+      let(:solution) { double("Solution") }
 
-      it "returns right recommendations" do
-        expect(likeset.recommendations_for(1).sort).to eq([3])
-        expect(likeset.recommendations_for(2).sort).to eq([2, 7, 9])
-        expect(likeset.recommendations_for(3).sort).to eq([1])
-      end
+      it "builds proper likes_of and liked and delegates solution to engine instance" do
+        expect(engine)
+          .to receive(:new)
+          .with(person, proper_likes_of, proper_liked)
+          .and_return(engine_instance)
 
-      context "when there is an identic match with other person" do
-        let(:likeset) {
-          Likes::Set.new([
-            Likes::Like.new(person: 1, item: 1),
-            Likes::Like.new(person: 1, item: 5),
-            Likes::Like.new(person: 1, item: 4),
-            Likes::Like.new(person: 1, item: 7),
+        expect(engine_instance).to receive(:solve).and_return(solution)
 
-            Likes::Like.new(person: 2, item: 1),
-            Likes::Like.new(person: 2, item: 3),
-            Likes::Like.new(person: 2, item: 5),
-            Likes::Like.new(person: 2, item: 4),
-
-            Likes::Like.new(person: 4, item: 1),
-            Likes::Like.new(person: 4, item: 5),
-            Likes::Like.new(person: 4, item: 4),
-            Likes::Like.new(person: 4, item: 7),
-
-            Likes::Like.new(person: 3, item: 3),
-            Likes::Like.new(person: 3, item: 2),
-            Likes::Like.new(person: 3, item: 5),
-            Likes::Like.new(person: 3, item: 4),
-            Likes::Like.new(person: 3, item: 9),
-          ])
-        }
-
-        it "ignores identical candidates" do
-          expect(likeset.recommendations_for(1).sort).to eq([3])
-        end
-      end
-
-      context "when there is nothing to recommend" do
-        let(:likeset) {
-          Likes::Set.new([
-            Likes::Like.new(person: 1, item: 1),
-            Likes::Like.new(person: 1, item: 5),
-            Likes::Like.new(person: 1, item: 4),
-            Likes::Like.new(person: 1, item: 7),
-
-            Likes::Like.new(person: 4, item: 1),
-            Likes::Like.new(person: 4, item: 5),
-            Likes::Like.new(person: 4, item: 7),
-          ])
-        }
-
-        it "returns an empty solution" do
-          expect(likeset.recommendations_for(1).sort).to eq([])
-        end
+        expect(likeset.recommendations_for(person)).to eq(solution)
       end
     end
   end

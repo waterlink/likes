@@ -22,8 +22,6 @@ Or install it yourself as:
 
 ## Usage
 
-*Not implemented yet*
-
 ```ruby
 require "likes"
 

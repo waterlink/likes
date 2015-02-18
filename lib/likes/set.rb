@@ -63,7 +63,7 @@ module Likes
       end
 
       def solve
-        solution_candidate(intersections.next_candidates)
+        solution_candidate(intersections.next_people_with_similar_tastes)
       end
 
       private
@@ -111,7 +111,7 @@ module Likes
         end
       end
 
-      def next_candidates
+      def next_people_with_similar_tastes
         candidates_with(next_best_size)
       end
 

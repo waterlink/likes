@@ -22,6 +22,8 @@ Or install it yourself as:
 
 ## Usage
 
+*Not implemented yet*
+
 ```ruby
 likeset = Likes::Set.new([
   Likes::Like.new(person: 1, item: 1),

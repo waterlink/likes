@@ -4,4 +4,8 @@ source 'https://rubygems.org'
 gemspec
 
 gem "rspec"
-gem "yard"
+
+group :development do
+  gem "yard"
+  gem "reek"
+end

@@ -1,4 +1,5 @@
 require "likes/version"
+require "likes/support"
 require "likes/engines"
 require "likes/like"
 require "likes/set"

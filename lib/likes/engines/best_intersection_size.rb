@@ -87,7 +87,6 @@ module Likes
       # Job: Understands similar tastes
       class Intersections
         NO_LIMIT = Object.new.freeze
-        ALLOWED_ERROR = 1e-9
 
         def self.build(person)
           new(person, NullSizeTransform.new)
@@ -118,7 +117,7 @@ module Likes
         def candidates_with(intersection_size)
           return [] if no_limit?(intersection_size)
           transformed_sizes.select { |_, size|
-            eq_with_error?(intersection_size, size)
+            Support::FloatWithError.new(intersection_size) == size
           }
         end
 
@@ -145,10 +144,6 @@ module Likes
 
         def no_limit?(limit)
           NO_LIMIT == limit
-        end
-
-        def eq_with_error?(a, b)
-          (a - b).abs < ALLOWED_ERROR
         end
       end
     end

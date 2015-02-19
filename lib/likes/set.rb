@@ -1,11 +1,17 @@
 module Likes
   # Job: Understands patterns in people likings
   class Set
+    # Default engine - simplest one
+    #
+    # @see Engines::BestIntersectionSize
     DEFAULT_ENGINE = Engines::BestIntersectionSize
 
     # Creates new instance of Set
     #
     # @param [Array<Like>] likes List of likes
+    # @param [Engines::Protocol] engine Recommendation engine to use
+    #
+    # @see Engines
     def initialize(likes, engine=DEFAULT_ENGINE)
       @likes = likes
       @engine = engine

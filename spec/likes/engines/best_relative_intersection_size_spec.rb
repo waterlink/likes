@@ -1,6 +1,6 @@
 module Likes
-  RSpec.describe "Set with Likes::Engines::BestIntersectionSize" do
-    let(:engine) { Engines::BestIntersectionSize }
+  RSpec.describe "Set with Likes::Engines::BestRelativeIntersectionSize" do
+    let(:engine) { Engines::BestRelativeIntersectionSize }
 
     let(:raw_likeset) { Fixtures.regular_likeset }
     let(:likeset) { Set.new(raw_likeset, engine) }
@@ -19,8 +19,8 @@ module Likes
       context "when somebody literally likes everything" do
         let(:raw_likeset) { Fixtures.somebody_likes_literally_everything }
 
-        it "chooses this person as a candidate for recommendations" do
-          expect(likeset.recommendations_for(1).sort).to eq([3, 4, 6, 7, 9, 17, 19])
+        it "doesn't choose this person as a candidate for recommendations" do
+          expect(likeset.recommendations_for(1).sort).to eq([4, 9])
         end
       end
 

@@ -1,3 +1,4 @@
+# @ignore :reek:UtilityFunction
 module Fixtures
   class << self
     def small_likeset
@@ -29,6 +30,7 @@ module Fixtures
         Likes::Like.new(person: 1, item: 5),
         Likes::Like.new(person: 1, item: 4),
         Likes::Like.new(person: 1, item: 7),
+        Likes::Like.new(person: 1, item: 19),
 
         Likes::Like.new(person: 2, item: 1),
         Likes::Like.new(person: 2, item: 3),
@@ -78,6 +80,27 @@ module Fixtures
         Likes::Like.new(person: 4, item: 1),
         Likes::Like.new(person: 4, item: 5),
         Likes::Like.new(person: 4, item: 7),
+      ]
+    end
+
+    def somebody_likes_literally_everything
+      [
+        Likes::Like.new(person: 1, item: 1),
+        Likes::Like.new(person: 1, item: 5),
+
+        Likes::Like.new(person: 2, item: 1),
+        Likes::Like.new(person: 2, item: 3),
+        Likes::Like.new(person: 2, item: 5),
+        Likes::Like.new(person: 2, item: 4),
+        Likes::Like.new(person: 2, item: 17),
+        Likes::Like.new(person: 2, item: 6),
+        Likes::Like.new(person: 2, item: 19),
+        Likes::Like.new(person: 2, item: 7),
+        Likes::Like.new(person: 2, item: 9),
+
+        Likes::Like.new(person: 3, item: 5),
+        Likes::Like.new(person: 3, item: 4),
+        Likes::Like.new(person: 3, item: 9),
       ]
     end
   end

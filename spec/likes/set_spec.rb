@@ -14,10 +14,10 @@ module Likes
       let(:solution) { double("Solution") }
 
       it "builds proper likes_of and liked and delegates solution to engine instance" do
-        expect(engine)
-          .to receive(:new)
-          .with(person, proper_likes_of, proper_liked)
-          .and_return(engine_instance)
+        expect(engine).
+          to receive(:new).
+          with(person, proper_likes_of, proper_liked).
+          and_return(engine_instance)
 
         expect(engine_instance).to receive(:solve).and_return(solution)
 

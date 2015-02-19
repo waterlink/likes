@@ -126,15 +126,15 @@ module Likes
         end
 
         def get_best_size(limit)
-          transformed_sizes
-            .select { |_, size| in_limit?(size, limit) }
-            .map { |_, size| size }.max || NO_LIMIT
+          transformed_sizes.
+            select { |_, size| in_limit?(size, limit) }.
+            map { |_, size| size }.max || NO_LIMIT
         end
 
         def transformed_sizes
-          @_transformed_sizes ||= sizes.map { |person, size|
+          @_transformed_sizes ||= Hash[sizes.map { |person, size|
             [person, size_transform[person, size]]
-          }.to_h
+          }]
         end
 
         def in_limit?(size, limit)

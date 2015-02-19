@@ -1,4 +1,10 @@
-require "prime"
+PrimeFactory = if RUBY_VERSION.to_f > 1.8
+  require "prime"
+  Prime
+else
+  require "mathn"
+  Prime.new
+end
 
 module Likes
   module Support
@@ -28,10 +34,10 @@ module Likes
     # @private
     # Job: Understands random hash function generation
     class HashFunction
-      PRIMES = Prime.first(3200)[-250..-1]
+      PRIMES = PrimeFactory.first(3200)[-250..-1]
 
       def self.sample(count, modulo)
-        (0...count).map { new(*(PRIMES.sample(2) + [modulo])) }
+        (0...count).map { new(*(sample_primes(2) + [modulo])) }
       end
 
       def initialize(factor, constant, modulo)
@@ -49,6 +55,14 @@ module Likes
       private
 
       attr_accessor :factor, :constant, :modulo
+
+      def self.sample_primes(count)
+        if RUBY_VERSION.to_f > 1.8
+          PRIMES.sample(count)
+        else
+          (0...count).map { PRIMES.choice }
+        end
+      end
     end
   end
 end

@@ -38,7 +38,7 @@ module Likes
           person,
           likes_of,
           liked,
-          RelativeIntersectionsFactory.new(likes_of),
+          RelativeIntersectionsFactory.new(likes_of)
         )
       end
 
@@ -58,7 +58,7 @@ module Likes
       # logic
       class RelativeIntersectionsFactory
         def initialize(likes_of)
-          @sets_sizes = likes_of.map { |person, items| [person, items.size] }.to_h
+          @sets_sizes = Hash[likes_of.map { |person, items| [person, items.size] }]
         end
 
         def build(person)

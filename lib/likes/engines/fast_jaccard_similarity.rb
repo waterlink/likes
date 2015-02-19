@@ -22,6 +22,7 @@ module Likes
 
       MAX_HASH_FUNCTIONS_COUNT = 200
       ALLOW_FLUCTUATION = 1.075
+      INFINITY = 1.0 / 0
 
       # Creates new instance of FastJaccardSimilarity engine
       #
@@ -56,7 +57,7 @@ module Likes
 
       def init_signature
         @signature = (0...MAX_HASH_FUNCTIONS_COUNT).map {
-          Array.new(people.count, Float::INFINITY)
+          Array.new(people.count, INFINITY)
         }
       end
 
@@ -65,11 +66,13 @@ module Likes
       end
 
       def similarities
-        @_similarities ||= people
-                         .each_with_index
-                         .each_with_object({person => -1}) do |(other_person, column), similarities|
-          next if person == other_person
-          similarities[other_person] = relative_similarity(similarity_for(column), other_person)
+        @_similarities ||= people.
+                         each_with_index.
+                         inject({person => -1}) do |similarities, (other_person, column)|
+          if person != other_person
+            similarities[other_person] = relative_similarity(similarity_for(column), other_person)
+          end
+          similarities
         end
       end
 
@@ -100,9 +103,9 @@ module Likes
       end
 
       def candidates
-        similarities.select { |_, similarity|
+        Hash[similarities.select { |_, similarity|
           best_similarity <= similarity * ALLOW_FLUCTUATION
-        }.keys
+        }].keys
       end
 
       def recommendations

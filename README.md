@@ -1,5 +1,7 @@
 # Likes
 
+[![Build Status](https://travis-ci.org/waterlink/likes.svg?branch=master)](https://travis-ci.org/waterlink/likes)
+
 Give it a list of people and their likings and it will tell what else could these people like.
 
 This is a ruby gem.

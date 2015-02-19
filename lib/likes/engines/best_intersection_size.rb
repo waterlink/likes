@@ -8,7 +8,8 @@ module Likes
     # Worst approximation of execution time:
     #
     # Given K = how much likes target person has, in reasonable
-    # situations it is not very big number
+    # situations it is not very big number. But in theory can be as
+    # high as P
     #
     # Given N = how much distinct people we have
     #

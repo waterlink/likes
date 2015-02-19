@@ -10,9 +10,11 @@ module Likes
     # Given K = how much likes target person has, in reasonable
     # situations it is not very big number
     #
-    # Given N = how much distinct persons we have
+    # Given N = how much distinct people we have
     #
-    # Complexity: O(NK)
+    # Given P = how much distinct items we have
+    #
+    # Complexity: O(NK) * O(hash operations ~ log N + log P)
     #
     # @see BestRelativeIntersectionSize
     class BestIntersectionSize

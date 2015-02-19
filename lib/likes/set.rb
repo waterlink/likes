@@ -22,7 +22,7 @@ module Likes
     # Provides list of recommendations for person based on this
     # likeset
     #
-    # Should handle amount of distinct persons <= 10**6 and amount of
+    # Should handle amount of distinct people <= 10**6 and amount of
     # distinct items <= 10**6, but likeset length is <= 10**7, ie it
     # is advised to use only recent likes (couple of weeks or month)
     #

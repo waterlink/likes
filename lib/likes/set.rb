@@ -3,8 +3,8 @@ module Likes
   class Set
     # Default engine - simplest one
     #
-    # @see Engines::BestIntersectionSize
-    DEFAULT_ENGINE = Engines::BestIntersectionSize
+    # @see Engines::FastJaccardSimilarity
+    DEFAULT_ENGINE = Engines::FastJaccardSimilarity
 
     # Creates new instance of Set
     #

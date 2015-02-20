@@ -1,7 +1,7 @@
 module Likes
   # Job: Understands patterns in people likings
   class Set
-    # Default engine - simplest one
+    # Default engine - a fast one
     #
     # @see Engines::FastJaccardSimilarity
     DEFAULT_ENGINE = Engines::FastJaccardSimilarity

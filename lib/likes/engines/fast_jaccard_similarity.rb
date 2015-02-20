@@ -38,6 +38,7 @@ module Likes
         @liked = liked
         @items = liked.keys
         @people = likes_of.keys
+        @similarity_limit = INFINITY
       end
 
       # Solves the problem and returns recommendation list
@@ -53,7 +54,7 @@ module Likes
       private
 
       attr_reader :person, :likes_of, :liked, :items, :people,
-        :signature, :hash_functions, :hashes
+        :signature, :hash_functions, :hashes, :similarity_limit
 
       def init_signature
         @signature = (0...MAX_HASH_FUNCTIONS_COUNT).map {
@@ -99,19 +100,39 @@ module Likes
       end
 
       def best_similarity
-        similarities.values.max
+        @_best_similarity ||= similarities.
+          values.
+          select { |similarity| similarity < similarity_limit }.
+          max
       end
 
       def candidates
+        return [] unless best_similarity
         Hash[similarities.select { |_, similarity|
           best_similarity <= similarity * ALLOW_FLUCTUATION
         }].keys
       end
 
       def recommendations
+        return [] if candidates.empty?
+        non_empty_recommendations(recommendations_candidate)
+      end
+
+      def recommendations_candidate
         candidates.map { |other_person, _|
           likes_of.fetch(other_person) - own_likes
         }.flatten.uniq
+      end
+
+      def non_empty_recommendations(solution)
+        return next_recommendations if solution.empty?
+        solution
+      end
+
+      def next_recommendations
+        @similarity_limit = best_similarity
+        @_best_similarity = nil
+        recommendations
       end
 
       # Full complexity: D * O(likeset size * log N) ~ O(N log N) with big constant
@@ -130,9 +151,14 @@ module Likes
 
       def each_column_of_likes(item, row, &blk)
         # only columns with 1 in matrix:
-        liked.fetch(item).each_with_index do |person, column|
-          blk[item, person, row, column]
+        liked.fetch(item).each do |person|
+          blk[item, person, row, person_column(person)]
         end
+      end
+
+      def person_column(person)
+        @_person_column ||= {}
+        @_person_column[person] ||= people.index(person)
       end
 
       # Complexity: D * O(1)

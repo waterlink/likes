@@ -19,8 +19,8 @@ module Likes
       context "when somebody literally likes everything" do
         let(:raw_likeset) { Fixtures.somebody_likes_literally_everything }
 
-        it "possibly can choose this person as a candidate for recommendations" do
-          expect(likeset.recommendations_for(1).sort).to eq([4, 9]).or eq([3, 4, 6, 7, 9, 17, 19])
+        it "does not choose this person as a candidate for recommendations" do
+          expect(likeset.recommendations_for(1).sort).to eq([4, 9])
         end
       end
 

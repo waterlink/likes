@@ -50,6 +50,20 @@ likeset.recommendations_for(2)     #=> [7, 2, 9]
 likeset.recommendations_for(3)     #=> [1]
 ```
 
+### Engines
+
+There are currently 3 different engines:
+
+- `Likes::Engines::BestIntersectionSize` - simplest implementation, calculates liking intersection size for current person with all other people. Chooses maximum intersection size to generate recommendations. Worst complexity: `O(NK) * O(log N + log P)` where `N` - distinct people count, `P` - distinct items count, `K` - how much likes current person has (in practice not very big number, in theory can be as high as `P`).
+- `Likes::Engines::BestRelativeIntersectionSize` - the same as previous, but uses relative intersection size to eliminate 'I-like-everything-in-the-world' noise. `Relative intersection size = intersection size / (union size + intersection size)`. Worst complexity is the same as above.
+- `Likes::Engines::FastJaccardSimilarity` - much faster implementation. Uses relative intersection size estimation to find people to make a base for recommendations. Uses `minhash` algorithm to calculate set signature for each person, which makes initiali dataset much smaller. Allows to reuse for different people without re-calculating set signatures, but currently not implemented. Worst complexity: `D * O(P + N) * O(log N + log P)` where `D` - depth of implementation (count of different hash functions used), currently `D = 200`.
+
+By default `FastJaccardSimilarity` is used. If you want to use different engine, then you can do this:
+
+```ruby
+Likes::Set.new(like_list, Likes::Engines::BestRelativeIntersectionSize)
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/waterlink/likes/fork )

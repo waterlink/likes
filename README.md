@@ -64,6 +64,10 @@ By default `FastJaccardSimilarity` is used. If you want to use different engine,
 Likes::Set.new(like_list, Likes::Engines::BestRelativeIntersectionSize)
 ```
 
+#### Implementing your own engine
+
+If you want to implement your own engine, you should look at this protocol: [lib/likes/engines/protocol.rb](blob/master/lib/likes/engines/protocol.rb)
+
 ## Contributing
 
 1. Fork it ( https://github.com/waterlink/likes/fork )

@@ -66,7 +66,7 @@ Likes::Set.new(like_list, Likes::Engines::BestRelativeIntersectionSize)
 
 #### Implementing your own engine
 
-If you want to implement your own engine, you should look at this protocol: [lib/likes/engines/protocol.rb](blob/master/lib/likes/engines/protocol.rb)
+If you want to implement your own engine, you should look at this protocol: [lib/likes/engines/protocol.rb](lib/likes/engines/protocol.rb)
 
 ## Contributing
 
